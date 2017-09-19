@@ -11,7 +11,6 @@ get '/' do
     'Emma P',
     'Helen P',
     'Jacob L',
-    'James B',
     'James M',
     'James R',
     'Janet C',
@@ -26,7 +25,8 @@ get '/' do
     'Michelle B',
     'Mike S',
     'Paul H',
-    'Thomas P'
+    'Thomas P',
+    'Victoria G'
   ]
 
   @student = names[rand(names.size)]
