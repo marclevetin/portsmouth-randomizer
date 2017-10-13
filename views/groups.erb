@@ -1,6 +1,6 @@
 <h2>Groups of <%= params[:count].to_i %></h2>
 <ol>
-  <% @groups.each do |group| %>
+  <% @groups.each_with_index do |group, index| %>
     <li>
       <%= group.join(", ") %>
     </li>

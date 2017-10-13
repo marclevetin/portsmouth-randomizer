@@ -58,6 +58,11 @@ get '/groups/:count' do
     @groups.pop
   end
 
+  # Appends "leader designation"
+  @groups.each do |group|
+    group[0] = group[0] + " (leader)"
+  end
+
   @groups
 
   erb :groups
