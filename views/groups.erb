@@ -2,7 +2,7 @@
 <ol>
   <% @groups.each do |group| %>
     <li>
-      <%= group %>
+      <%= group.join(", ") %>
     </li>
   <% end %>
 </ol>

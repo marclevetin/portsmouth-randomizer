@@ -41,7 +41,18 @@ end
 
 get '/groups/:count' do
   count = params[:count].to_i
-  @groups = names.shuffle.each_slice(count)
+  @groups = names.shuffle.each_slice(count).to_a
+  if @groups[-1] != count
+    last_group = @groups[-1]
+    i = 0
+    last_group.each do |person|
+      @groups[i].push(person)
+      i = i + 1
+    end
+    @groups.pop
+  end
+
+  @groups
 
   erb :groups
 end
