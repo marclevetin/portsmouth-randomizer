@@ -42,10 +42,9 @@ end
 get '/groups/:count' do
   count = params[:count].to_i
   @groups = names.shuffle.each_slice(count).to_a
-  if @groups[-1] != count && @groups.size % count != 0
-    last_group = @groups[-1]
+  if @groups.last.size != count
     i = 0
-    last_group.each do |person|
+    @groups.last.each do |person|
       # bug whereby the i is too large.  Need to change the iterator to
       # loop through from 0 to @groups.size -1
       @groups[i].push(person)
