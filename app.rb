@@ -29,9 +29,25 @@ names = [
   'Victoria G'
 ]
 
+picked = []
+
 get '/' do
+  # pick a random student
   @student = names[rand(names.size)]
-    erb :index
+
+  if names.size > 0
+    # remove them from the names array, so they won't be picked twice
+    names.delete(@student)
+    picked.push(@student)
+  elsif names.size == 0
+    # when names is empty, all the students must have been picked.
+    # this restores names to its original state.
+    names = picked
+  end
+
+  @student
+
+  erb :index
 end
 
 post '/' do
@@ -41,7 +57,12 @@ end
 
 get '/groups/:count' do
   count = params[:count].to_i
-  @groups = names.shuffle.each_slice(count).to_a
+  # it's possible that names doesn't represent all the students in the class b/c
+  # some have answered questions.  all_names ensures that the entire class is
+  # included in a group.
+  all_names = names + picked
+
+  @groups = all_names.shuffle.each_slice(count).to_a
   if @groups.last.size != count
     i = 0
     @groups.last.each do |person|
