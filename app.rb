@@ -42,7 +42,7 @@ end
 get '/groups/:count' do
   count = params[:count].to_i
   @groups = names.shuffle.each_slice(count).to_a
-  if @groups[-1] != count
+  if @groups[-1] != count && @groups.size % count != 0
     last_group = @groups[-1]
     i = 0
     last_group.each do |person|
