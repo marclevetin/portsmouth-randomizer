@@ -41,7 +41,24 @@ end
 
 get '/groups/:count' do
   count = params[:count].to_i
-  @groups = names.shuffle.each_slice(count)
+  @groups = names.shuffle.each_slice(count).to_a
+  if @groups[-1] != count && @groups.size % count != 0
+    last_group = @groups[-1]
+    i = 0
+    last_group.each do |person|
+      # bug whereby the i is too large.  Need to change the iterator to
+      # loop through from 0 to @groups.size -1
+      @groups[i].push(person)
+      if i < @groups.size - 1
+        i = i + 1
+      else
+        i = 0
+      end
+    end
+    @groups.pop
+  end
+
+  @groups
 
   erb :groups
 end
