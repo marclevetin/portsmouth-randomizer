@@ -46,8 +46,14 @@ get '/groups/:count' do
     last_group = @groups[-1]
     i = 0
     last_group.each do |person|
+      # bug whereby the i is too large.  Need to change the iterator to
+      # loop through from 0 to @groups.size -1
       @groups[i].push(person)
-      i = i + 1
+      if i < @groups.size - 1
+        i = i + 1
+      else
+        i = 0
+      end
     end
     @groups.pop
   end
