@@ -1,5 +1,10 @@
 require 'sinatra'
 require 'pry'
+require 'net/http'
+require 'dotenv'
+Dotenv.load
+
+google_api_key = ENV['GOOGLE_API']
 
 names = [
   'Adam M',
@@ -27,6 +32,10 @@ names = [
   'Paul H',
   'Thomas P',
   'Victoria G'
+]
+
+photos = [
+  # need to add this
 ]
 
 picked = []
