@@ -80,7 +80,7 @@ get '/groups/:count' do
 
   # Appends "leader designation"
   @groups.each do |group|
-    group[0] = group[0] + " (leader)"
+    group[0] = group[0] + " (lead)"
   end
 
   @groups
