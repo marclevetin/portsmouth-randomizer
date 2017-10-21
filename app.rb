@@ -1,10 +1,10 @@
 require 'sinatra'
 require 'pry'
 require 'net/http'
+
+# these access the keys in the .env file.  Keep it secret.  Keep it safe.
 require 'dotenv'
 Dotenv.load
-
-google_api_key = ENV['GOOGLE_API']
 
 names = [
   'Adam M',
@@ -40,7 +40,9 @@ photos = [
 
 picked = []
 
+
 get '/' do
+  get_photos
   # pick a random student
   @student = names[rand(names.size)]
 
@@ -95,4 +97,12 @@ get '/groups/:count' do
   @groups
 
   erb :groups
+end
+
+private
+
+def get_photos
+  uri = URI('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&key=' + ENV['GOOGLE_API'])
+  res = Net::HTTP.get_response(uri)
+  binding.pry
 end
