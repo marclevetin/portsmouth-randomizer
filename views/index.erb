@@ -1,11 +1,19 @@
-<h2><%= @student %> will answer the question!</h2>
-<input type="button" value="Gimme another student!" onClick="window.location.reload()">
-<hr />
-<h2>Group selections</h2>
-<p>
-  How big should each group be?
-</p>
-<form action="/" method="post">
-  <input type="text" name="groups" placeholder="groups of..."/>
-  <input type="submit" />
-</form>
+<div class="row">
+  <div class="col-md-6">
+    <h2><%= @student %> will answer the question!</h2>
+    <input type="button" value="Gimme another student!" onClick="window.location.reload()">
+
+    <hr />
+    <h2>Group selections</h2>
+    <p>
+      How big should each group be?
+    </p>
+    <form action="/" method="post">
+      <input type="text" name="groups" placeholder="groups of..."/>
+      <input type="submit" />
+    </form>
+</div>
+<div class="col-md-6">
+  <img src="<%= @image %>" class="img-rounded" alt="photos borrowed from portsmouthnh.com" width="400" height="400"/>
+</div>
+</div>

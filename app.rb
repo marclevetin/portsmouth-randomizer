@@ -1,5 +1,10 @@
 require 'sinatra'
 require 'pry'
+require 'net/http'
+
+# these access the keys in the .env file.  Keep it secret.  Keep it safe.
+require 'dotenv'
+Dotenv.load
 
 names = [
   'Adam M',
@@ -29,7 +34,15 @@ names = [
   'Victoria G'
 ]
 
+photos = [
+  'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/north-church-820x820.jpg',
+  'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/newcastle-027-5-820x547.jpg',
+  'http://cdn.portsmouthnh.com/wp-content/uploads/2016/01/2015Fireworks1-820x615.jpg',
+  'http://cdn.portsmouthnh.com/wp-content/uploads/2015/01/SteveMazzarella_summer2013_1.jpg'
+]
+
 picked = []
+
 
 get '/' do
   # pick a random student
@@ -46,6 +59,7 @@ get '/' do
   end
 
   @student
+  @image = photos[rand(photos.size)]
 
   erb :index
 end
