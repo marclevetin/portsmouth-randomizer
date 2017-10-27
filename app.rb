@@ -35,14 +35,16 @@ names = [
 ]
 
 photos = [
-  # need to add this
+  'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/north-church-820x820.jpg',
+  'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/newcastle-027-5-820x547.jpg',
+  'http://cdn.portsmouthnh.com/wp-content/uploads/2016/01/2015Fireworks1-820x615.jpg',
+  'http://cdn.portsmouthnh.com/wp-content/uploads/2015/01/SteveMazzarella_summer2013_1.jpg'
 ]
 
 picked = []
 
 
 get '/' do
-  get_photos
   # pick a random student
   @student = names[rand(names.size)]
 
@@ -57,6 +59,7 @@ get '/' do
   end
 
   @student
+  @image = photos[rand(photos.size)]
 
   erb :index
 end
@@ -97,12 +100,4 @@ get '/groups/:count' do
   @groups
 
   erb :groups
-end
-
-private
-
-def get_photos
-  uri = URI('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&key=' + ENV['GOOGLE_API'])
-  res = Net::HTTP.get_response(uri)
-  binding.pry
 end
