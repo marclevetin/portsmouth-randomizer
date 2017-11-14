@@ -43,7 +43,6 @@ photos = [
 
 picked = []
 
-
 get '/' do
   # pick a random student
   @student = names[rand(names.size)]
