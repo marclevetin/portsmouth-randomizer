@@ -15,10 +15,14 @@ photos = [
 
 picked = []
 
+get '/' do
+  'This has been refactored.  Please use the class-specific URL.  The class beginning in September 2017 is /unh.  The class beginning in November 2017 is /unh1.'
+end
+
 get '/:class_program' do
   # determine which class we're working with
   class_program = params['class_program']
-  select_names(class_program)
+  select_names(class_program, picked)
 
   # pick a random student and image
   @student = @names[rand(@names.size)]
@@ -30,17 +34,21 @@ get '/:class_program' do
   erb :index
 end
 
-post '/' do
+post '/:class_program' do
+  class_program = params[:class_program]
   groups = params[:groups]
-  redirect to("/groups/#{groups}")
+
+  redirect to("#{class_program}/groups/#{groups}")
 end
 
-get '/groups/:count' do
+get '/:class_program/groups/:count' do
+  class_program = params[:class_program]
   count = params[:count].to_i
-  # it's possible that names doesn't represent all the students in the class b/c
+
+  # it's possible that @names doesn't represent all the students in the class b/c
   # some have answered questions.  all_names ensures that the entire class is
   # included in a group.
-  all_names = names + picked
+  all_names = select_names(class_program, [])
 
   @groups = all_names.shuffle.each_slice(count).to_a
   if @groups.last.size != count
@@ -84,7 +92,7 @@ def process_student(student, class_program, picked)
   end
 end
 
-def select_names(class_program)
+def select_names(class_program, picked)
   if class_program == 'unh'
     @names = [
       'Adam M',
@@ -141,6 +149,11 @@ def select_names(class_program)
       'Noah S',
       'Joy C'
     ]
+  end
+
+  # removes picked people from the list.  Possible refactor in the future.
+  picked.each do |person|
+    @names.delete(person)
   end
 
   return @names
