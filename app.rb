@@ -34,6 +34,34 @@ names = [
   'Victoria G'
 ]
 
+names2 = [
+  'Donald B',
+  'Alexander	J',
+  'Eric S',
+  'Matthew	M',
+  'Samuel L',
+  'Kevin S',
+  'Thomas H',
+  'Mary D',
+  'Roxana M',
+  'John R',
+  'Sarah S',
+  'Eric M',
+  'Askar T',
+  'Clark M',
+  'Anitharaj S',
+  'JoAnn E',
+  'Aaron B',
+  'Shraddha B',
+  'Rupali M',
+  'Keira N',
+  'Anthony K',
+  'Jake O',
+  'Rebecca B',
+  'Noah S',
+  'Joy C'
+]
+
 photos = [
   'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/north-church-820x820.jpg',
   'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/newcastle-027-5-820x547.jpg',
@@ -42,6 +70,10 @@ photos = [
 ]
 
 picked = []
+
+get '/unh' do
+  
+end
 
 
 get '/' do
