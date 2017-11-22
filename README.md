@@ -6,4 +6,6 @@ This site solves two problems:
 
 * We wanted a fair way to divide the class into groups.  Students often sit in the same seats, so they often grouped together.  We also wanted a fair way to set a group leader.
 
-See it live: https://portsmouth-randomizer.herokuapp.com/
+This app supports concurrent classes.  See it live: 
+For the class beginning September 2017: https://portsmouth-randomizer.herokuapp.com/unh/
+For the class beginning November 2017: https://portsmouth-randomizer.herokuapp.com/unh1/
