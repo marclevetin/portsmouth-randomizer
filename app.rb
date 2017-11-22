@@ -6,34 +6,6 @@ require 'net/http'
 require 'dotenv'
 Dotenv.load
 
-names = [
-  'Adam M',
-  'Ben B',
-  'Chase L',
-  'Connor M',
-  'Doreen W',
-  'Elizah H',
-  'Emma P',
-  'Helen P',
-  'Jacob L',
-  'James M',
-  'James R',
-  'Janet C',
-  'Joseph C',
-  'Justin R',
-  'Karen J',
-  'Katie D',
-  'Lauren M',
-  'Lauren W',
-  'Louise H',
-  'Michael F',
-  'Michelle B',
-  'Mike S',
-  'Paul H',
-  'Thomas P',
-  'Victoria G'
-]
-
 photos = [
   'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/north-church-820x820.jpg',
   'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/newcastle-027-5-820x547.jpg',
@@ -44,36 +16,39 @@ photos = [
 picked = []
 
 get '/' do
-  # pick a random student
-  @student = names[rand(names.size)]
+  'This has been refactored.  Please use the class-specific URL.  The class beginning in September 2017 is /unh.  The class beginning in November 2017 is /unh1.'
+end
 
-  if names.size > 0
-    # remove them from the names array, so they won't be picked twice
-    names.delete(@student)
-    picked.push(@student)
-  elsif names.size == 0
-    # when names is empty, all the students must have been picked.
-    # this restores names to its original state.
-    names = picked
-  end
+get '/:class_program' do
+  # determine which class we're working with
+  class_program = params['class_program']
+  select_names(class_program, picked)
 
-  @student
+  # pick a random student and image
+  @student = @names[rand(@names.size)]
   @image = photos[rand(photos.size)]
+
+  # process the student and reset the picked list if needed
+  process_student(@student, class_program, picked)
 
   erb :index
 end
 
-post '/' do
+post '/:class_program' do
+  class_program = params[:class_program]
   groups = params[:groups]
-  redirect to("/groups/#{groups}")
+
+  redirect to("#{class_program}/groups/#{groups}")
 end
 
-get '/groups/:count' do
+get '/:class_program/groups/:count' do
+  class_program = params[:class_program]
   count = params[:count].to_i
-  # it's possible that names doesn't represent all the students in the class b/c
+
+  # it's possible that @names doesn't represent all the students in the class b/c
   # some have answered questions.  all_names ensures that the entire class is
   # included in a group.
-  all_names = names + picked
+  all_names = select_names(class_program, [])
 
   @groups = all_names.shuffle.each_slice(count).to_a
   if @groups.last.size != count
@@ -99,4 +74,87 @@ get '/groups/:count' do
   @groups
 
   erb :groups
+end
+
+private
+
+def process_student(student, class_program, picked)
+  if class_program.size > 0
+    # remove them from the names array, so they won't be picked twice
+    class_program.delete(student)
+    picked.push(student)
+  end
+
+  if class_program.size == 0
+    # when names is empty, all the students must have been picked.
+    # this restores names to its original state.
+    class_program = picked
+  end
+end
+
+def select_names(class_program, picked)
+  if class_program == 'unh'
+    @names = [
+      'Adam M',
+      'Ben B',
+      'Chase L',
+      'Connor M',
+      'Doreen W',
+      'Elizah H',
+      'Emma P',
+      'Helen P',
+      'Jacob L',
+      'James M',
+      'James R',
+      'Janet C',
+      'Joseph C',
+      'Justin R',
+      'Karen J',
+      'Katie D',
+      'Lauren M',
+      'Lauren W',
+      'Louise H',
+      'Michael F',
+      'Michelle B',
+      'Mike S',
+      'Paul H',
+      'Thomas P',
+      'Victoria G'
+    ]
+  elsif class_program == 'unh1'
+    @names = [
+      'Donald B',
+      'Alexander	J',
+      'Eric S',
+      'Matthew	M',
+      'Samuel L',
+      'Kevin S',
+      'Thomas H',
+      'Mary D',
+      'Roxana M',
+      'John R',
+      'Sarah S',
+      'Eric M',
+      'Askar T',
+      'Clark M',
+      'Anitharaj S',
+      'JoAnn E',
+      'Aaron B',
+      'Shraddha B',
+      'Rupali M',
+      'Keira N',
+      'Anthony K',
+      'Jake O',
+      'Rebecca B',
+      'Noah S',
+      'Joy C'
+    ]
+  end
+
+  # removes picked people from the list.  Possible refactor in the future.
+  picked.each do |person|
+    @names.delete(person)
+  end
+
+  return @names
 end
