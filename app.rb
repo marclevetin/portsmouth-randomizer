@@ -17,6 +17,8 @@ picked = []
 
 get '/' do
   'This has been refactored.  Please use the class-specific URL.  The class beginning in September 2017 is /unh.  The class beginning in November 2017 is /unh1.'
+
+  erb :index
 end
 
 get '/:class_program' do
@@ -31,7 +33,7 @@ get '/:class_program' do
   # process the student and reset the picked list if needed
   process_student(@student, class_program, picked)
 
-  erb :index
+  erb :class
 end
 
 post '/:class_program' do
