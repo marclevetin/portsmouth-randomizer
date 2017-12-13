@@ -8,3 +8,12 @@
 </ol>
 <input type="button" value="Gimme another group!" onClick="window.location.reload()">
 <button type="button" id="back-button" value="< Back" onClick="window.history.go(-1)">< Back</button>
+<hr/>
+<p>
+  <% if !@absent.empty? || @absent.nil? %>
+    These folks are absent today: <%= @absent.join(", ") %>
+  <% end %>
+</p>
+<p>
+  <a href='/<%= params[:class_program] %>/absent'>Mark folks absent</a>
+</p>

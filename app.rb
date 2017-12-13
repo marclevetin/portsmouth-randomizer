@@ -1,10 +1,5 @@
 require 'sinatra'
 require 'pry'
-require 'net/http'
-
-# these access the keys in the .env file.  Keep it secret.  Keep it safe.
-require 'dotenv'
-Dotenv.load
 
 photos = [
   'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/north-church-820x820.jpg',
@@ -12,8 +7,11 @@ photos = [
   'http://cdn.portsmouthnh.com/wp-content/uploads/2016/01/2015Fireworks1-820x615.jpg',
   'http://cdn.portsmouthnh.com/wp-content/uploads/2015/01/SteveMazzarella_summer2013_1.jpg'
 ]
-
+# students that have been "picked" and answered a question already
 picked = []
+
+# students that have been marked "absent"
+absent = []
 
 get '/' do
   'This has been refactored.  Please use the class-specific URL.  The class beginning in September 2017 is /unh.  The class beginning in November 2017 is /unh1.'
@@ -24,14 +22,18 @@ end
 get '/:class_program' do
   # determine which class we're working with
   class_program = params['class_program']
-  select_names(class_program, picked)
+  students = select_names(class_program, picked, absent)
 
   # pick a random student and image
   @student = @names[rand(@names.size)]
   @image = photos[rand(photos.size)]
 
+  # absent students
+  @absent = absent
+
   # process the student and reset the picked list if needed
-  process_student(@student, class_program, picked)
+  process_student(@student, students, picked)
+
 
   erb :class
 end
@@ -47,10 +49,11 @@ get '/:class_program/groups/:count' do
   class_program = params[:class_program]
   count = params[:count].to_i
 
+  @absent = absent
   # it's possible that @names doesn't represent all the students in the class b/c
   # some have answered questions.  all_names ensures that the entire class is
   # included in a group.
-  all_names = select_names(class_program, [])
+  all_names = select_names(class_program, [], absent)
 
   @groups = all_names.shuffle.each_slice(count).to_a
   if @groups.last.size != count
@@ -78,6 +81,30 @@ get '/:class_program/groups/:count' do
   erb :groups
 end
 
+get '/:class_program/absent' do
+  class_program = params[:class_program]
+
+  # passing in an empty array for picked students because we need everyone in the class
+  @full_class = select_names(class_program, [])
+  @absent = absent
+
+  erb :absent
+end
+
+post '/:class_program/absent' do
+  class_program = params[:class_program]
+
+  # other functions require 'absent' to be an array.  This conditional ensures that happens.
+  if params[:people]
+    absent = params[:people]
+  else
+    absent = []
+  end
+
+  redirect to("#{class_program}")
+end
+
+
 private
 
 def process_student(student, class_program, picked)
@@ -94,7 +121,7 @@ def process_student(student, class_program, picked)
   end
 end
 
-def select_names(class_program, picked)
+def select_names(class_program, picked, absent = nil)
   if class_program == 'unh'
     @names = [
       'Adam M',
@@ -153,9 +180,14 @@ def select_names(class_program, picked)
     ]
   end
 
-  # removes picked people from the list.  Possible refactor in the future.
-  picked.each do |person|
-    @names.delete(person)
+  # removes absent folks from the list.
+  @names = @names - absent.to_a
+  # removes picked people from the list.
+  @names = @names - picked
+
+  # resets names when everyone has been picked.  (Common in small classes)
+  if @names.size == 0
+    @names = select_names(class_program, [], absent.to_a)
   end
 
   return @names
