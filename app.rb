@@ -49,6 +49,7 @@ get '/:class_program/groups/:count' do
   class_program = params[:class_program]
   count = params[:count].to_i
 
+  @absent = absent
   # it's possible that @names doesn't represent all the students in the class b/c
   # some have answered questions.  all_names ensures that the entire class is
   # included in a group.
@@ -181,12 +182,10 @@ def select_names(class_program, picked, absent = nil)
 
   # removes absent folks from the list.
   @names = @names - absent.to_a
-  # removes picked people from the list.  Possible refactor in the future.
-  # picked.each do |person|
-  #   @names.delete(person)
-  # end
+  # removes picked people from the list.
   @names = @names - picked
 
+  # resets names when everyone has been picked.  (Common in small classes)
   if @names.size == 0
     @names = select_names(class_program, [], absent.to_a)
   end
