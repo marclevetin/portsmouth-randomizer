@@ -19,5 +19,10 @@
 </div>
 <hr/>
 <p>
+  <% if !@absent.nil? %>
+  These folks are absent today: <%= @absent.join(", ") %>
+  <% end %>
+</p>
+<p>
   <a href='/<%= params[:class_program] %>/absent'>Mark folks absent</a>
 </p>

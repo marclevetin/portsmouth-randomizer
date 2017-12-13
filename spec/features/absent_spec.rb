@@ -18,8 +18,20 @@ feature "absent students" do
     expect(page).to have_content("Adam M")
   end
 
-  scenario "completed form removes people from groups" do
-    expect(page).to have_content("expected text")
-    expect(page).to_not have_content(expected value)
+  scenario "absent folks appear on class page" do
+    visit '/unh'
+    click_link('Mark folks absent')
+    check('Adam M')
+    click_on('submit')
+    expect(page).to have_content("These folks are absent today: Adam M")
+  end
+
+  scenario "already absent folks appear as absent when going to that page" do
+    visit '/unh'
+    click_link('Mark folks absent')
+    check('Adam M')
+    click_on('submit')
+    click_link('Mark folks absent')
+    expect(page).to have_checked_field('Adam M')
   end
 end

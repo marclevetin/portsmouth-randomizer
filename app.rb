@@ -1,10 +1,5 @@
 require 'sinatra'
 require 'pry'
-require 'net/http'
-
-# these access the keys in the .env file.  Keep it secret.  Keep it safe.
-require 'dotenv'
-Dotenv.load
 
 photos = [
   'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/north-church-820x820.jpg',
@@ -12,8 +7,11 @@ photos = [
   'http://cdn.portsmouthnh.com/wp-content/uploads/2016/01/2015Fireworks1-820x615.jpg',
   'http://cdn.portsmouthnh.com/wp-content/uploads/2015/01/SteveMazzarella_summer2013_1.jpg'
 ]
-
+# students that have been "picked" and answered a question already
 picked = []
+
+# students that have been marked "absent"
+absent = []
 
 get '/' do
   'This has been refactored.  Please use the class-specific URL.  The class beginning in September 2017 is /unh.  The class beginning in November 2017 is /unh1.'
@@ -24,11 +22,14 @@ end
 get '/:class_program' do
   # determine which class we're working with
   class_program = params['class_program']
-  select_names(class_program, picked)
+  select_names(class_program, picked, absent)
 
   # pick a random student and image
   @student = @names[rand(@names.size)]
   @image = photos[rand(photos.size)]
+
+  # absent students
+  @absent = absent
 
   # process the student and reset the picked list if needed
   process_student(@student, class_program, picked)
@@ -83,15 +84,25 @@ get '/:class_program/absent' do
 
   # passing in an empty array for picked students because we need everyone in the class
   @full_class = select_names(class_program, [])
+  @absent = absent
 
   erb :absent
+end
+
+post '/:class_program/absent' do
+  class_program = params[:class_program]
+  absent = params[:people]
+
+  redirect to("#{class_program}")
 end
 
 
 private
 
 def process_student(student, class_program, picked)
+  binding.pry
   if class_program.size > 0
+    binding.pry
     # remove them from the names array, so they won't be picked twice
     class_program.delete(student)
     picked.push(student)
@@ -104,7 +115,7 @@ def process_student(student, class_program, picked)
   end
 end
 
-def select_names(class_program, picked)
+def select_names(class_program, picked, absent = nil)
   if class_program == 'unh'
     @names = [
       'Adam M',
@@ -162,6 +173,9 @@ def select_names(class_program, picked)
       'Joy C'
     ]
   end
+
+  # removes absent folks from the list.
+  @names = @names - absent.to_a
 
   # removes picked people from the list.  Possible refactor in the future.
   picked.each do |person|

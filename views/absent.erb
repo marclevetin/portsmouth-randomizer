@@ -1,10 +1,16 @@
 <h1>Mark folks absent</h1>
 
-<form action="/<%= params[:class_program]%>/absent" method="post">
+<form action="/<%= params[:class_program]%>/absent" method="post" name="checkbox">
   <% @full_class.each do |student| %>
+    <% status %>
+
+    <% if !@absent.nil? && @absent.include?(student) %>
+      <% status = "checked" %>
+    <% end %>
+
     <div class="checkbox">
       <label>
-        <input type="checkbox" name="<%= student %>" value="<%= student %>"> <%= student %>
+        <input type="checkbox" name="people[]" value="<%= student %>" <%= status %>> <%= student %>
       </label>
     </div>
   <% end %>
