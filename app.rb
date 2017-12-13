@@ -78,6 +78,16 @@ get '/:class_program/groups/:count' do
   erb :groups
 end
 
+get '/:class_program/absent' do
+  class_program = params[:class_program]
+
+  # passing in an empty array for picked students because we need everyone in the class
+  @full_class = select_names(class_program, [])
+
+  erb :absent
+end
+
+
 private
 
 def process_student(student, class_program, picked)

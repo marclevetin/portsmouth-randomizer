@@ -12,8 +12,12 @@
       <input type="text" name="groups" placeholder="groups of..." />
       <input type="submit" id="submit" />
     </form>
+  </div>
+  <div class="col-md-6">
+    <img src="<%= @image %>" id="pic" class="img-rounded" alt="photos borrowed from portsmouthnh.com" width="400" height="400"/>
+  </div>
 </div>
-<div class="col-md-6">
-  <img src="<%= @image %>" id="pic" class="img-rounded" alt="photos borrowed from portsmouthnh.com" width="400" height="400"/>
-</div>
-</div>
+<hr/>
+<p>
+  <a href='/<%= params[:class_program] %>/absent'>Mark folks absent</a>
+</p>
