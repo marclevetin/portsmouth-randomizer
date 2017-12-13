@@ -22,7 +22,7 @@ end
 get '/:class_program' do
   # determine which class we're working with
   class_program = params['class_program']
-  select_names(class_program, picked, absent)
+  students = select_names(class_program, picked, absent)
 
   # pick a random student and image
   @student = @names[rand(@names.size)]
@@ -32,7 +32,8 @@ get '/:class_program' do
   @absent = absent
 
   # process the student and reset the picked list if needed
-  process_student(@student, class_program, picked)
+  process_student(@student, students, picked)
+
 
   erb :class
 end
@@ -51,7 +52,7 @@ get '/:class_program/groups/:count' do
   # it's possible that @names doesn't represent all the students in the class b/c
   # some have answered questions.  all_names ensures that the entire class is
   # included in a group.
-  all_names = select_names(class_program, [])
+  all_names = select_names(class_program, [], absent)
 
   @groups = all_names.shuffle.each_slice(count).to_a
   if @groups.last.size != count
@@ -91,7 +92,13 @@ end
 
 post '/:class_program/absent' do
   class_program = params[:class_program]
-  absent = params[:people]
+
+  # other functions require 'absent' to be an array.  This conditional ensures that happens.
+  if params[:people]
+    absent = params[:people]
+  else
+    absent = []
+  end
 
   redirect to("#{class_program}")
 end
@@ -100,9 +107,7 @@ end
 private
 
 def process_student(student, class_program, picked)
-  binding.pry
   if class_program.size > 0
-    binding.pry
     # remove them from the names array, so they won't be picked twice
     class_program.delete(student)
     picked.push(student)
@@ -176,10 +181,14 @@ def select_names(class_program, picked, absent = nil)
 
   # removes absent folks from the list.
   @names = @names - absent.to_a
-
   # removes picked people from the list.  Possible refactor in the future.
-  picked.each do |person|
-    @names.delete(person)
+  # picked.each do |person|
+  #   @names.delete(person)
+  # end
+  @names = @names - picked
+
+  if @names.size == 0
+    @names = select_names(class_program, [], absent.to_a)
   end
 
   return @names

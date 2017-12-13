@@ -19,8 +19,8 @@
 </div>
 <hr/>
 <p>
-  <% if !@absent.nil? %>
-  These folks are absent today: <%= @absent.join(", ") %>
+  <% if !@absent.empty? || @absent.nil? %>
+    These folks are absent today: <%= @absent.join(", ") %>
   <% end %>
 </p>
 <p>
