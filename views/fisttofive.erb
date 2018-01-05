@@ -1,0 +1,21 @@
+<h1>Fist to Five</h1>
+<h2>How are you feeling?</h2>
+<form action="/<%= params[:class_program] %>/fisttofive" method="post">
+  <button name="feeling" value="1">1 - No clue</button>
+  <button name="feeling" value="2">2 - Very shaky</button>
+  <button name="feeling" value="3">3 - Could be better</button>
+  <button name="feeling" value="4">4 - Solid</button>
+  <button name="feeling" value="5">5 - Amazing!</button>
+</form>
+
+<h2>Current results</h2>
+<% @results.each_with_index do |result, index| %>
+  <h3>
+    <%= index + 1 %>: <%= result %>
+  </h3>
+<% end %>
+
+<hr />
+<form action="/<%= params[:class_program] %>/fisttofive" method="post">
+  <button name="reset" value="true">Reset scores</button> 
+</form>
