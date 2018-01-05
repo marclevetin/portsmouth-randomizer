@@ -8,7 +8,7 @@
   <button name="feeling" value="5">5 - Amazing!</button>
 </form>
 
-<h2>Current results</h2>
+<h2>Current results</h2> <a onClick="window.location.reload()">Refresh page</a>
 <% @results.each_with_index do |result, index| %>
   <h3>
     <%= index + 1 %>: <%= result %>
@@ -17,5 +17,5 @@
 
 <hr />
 <form action="/<%= params[:class_program] %>/fisttofive" method="post">
-  <button name="reset" value="true">Reset scores</button> 
+  <button name="reset" value="true">Reset scores</button>
 </form>

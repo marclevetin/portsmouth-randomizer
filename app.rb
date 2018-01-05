@@ -115,7 +115,7 @@ end
 
 post '/:class_program/fisttofive' do
   class_program = params[:class_program]
-binding.pry
+
   if params[:reset]
     fist_to_five_array = [0,0,0,0,0]
   else
