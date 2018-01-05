@@ -13,9 +13,9 @@ picked = []
 # students that have been marked "absent"
 absent = []
 
-get '/' do
-  'This has been refactored.  Please use the class-specific URL.  The class beginning in September 2017 is /unh.  The class beginning in November 2017 is /unh1.'
+fist_to_five_array = [0,0,0,0,0]
 
+get '/' do
   erb :index
 end
 
@@ -104,6 +104,29 @@ post '/:class_program/absent' do
   redirect to("#{class_program}")
 end
 
+get '/:class_program/fisttofive' do
+  class_program = params[:class_program]
+
+  @results = fist_to_five_array
+
+  erb :fisttofive
+end
+
+
+post '/:class_program/fisttofive' do
+  class_program = params[:class_program]
+
+  if params[:reset]
+    fist_to_five_array = [0,0,0,0,0]
+  else
+    student_feeling = params[:feeling].to_i
+    index = student_feeling - 1
+
+    fist_to_five_array[index] += 1
+  end
+
+  redirect to("#{class_program}/fisttofive")
+end
 
 private
 
