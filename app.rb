@@ -1,6 +1,9 @@
 require 'sinatra'
 require 'pry'
 
+set :bind, "0.0.0.0"
+set :public_folder, File.join(File.dirname(__FILE__), "public")
+
 photos = [
   'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/north-church-820x820.jpg',
   'http://cdn.portsmouthnh.com/wp-content/uploads/2017/10/newcastle-027-5-820x547.jpg',
@@ -16,7 +19,8 @@ absent = []
 fist_to_five_array = [0,0,0,0,0]
 
 get '/' do
-  erb :index
+  # erb :index
+  erb :home
 end
 
 get '/:class_program' do
