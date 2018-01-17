@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'json'
 require 'pry'
 
 set :bind, "0.0.0.0"
@@ -18,11 +19,102 @@ absent = []
 
 fist_to_five_array = [0,0,0,0,0]
 
+# react routes
 get '/' do
   # erb :index
   erb :home
 end
 
+post '/api/v1/students' do
+  content_type :json
+
+  requested_class = request.body.read
+
+  if requested_class == 'unh'
+    @names = [
+      'Adam M',
+      'Ben B',
+      'Chase L',
+      'Connor M',
+      'Doreen W',
+      'Elizah H',
+      'Emma P',
+      'Helen P',
+      'Jacob L',
+      'James M',
+      'James R',
+      'Janet C',
+      'Joseph C',
+      'Justin R',
+      'Karen J',
+      'Katie D',
+      'Lauren M',
+      'Lauren W',
+      'Louise H',
+      'Michael F',
+      'Michelle B',
+      'Mike S',
+      'Paul H',
+      'Thomas P',
+      'Victoria G'
+    ]
+  elsif requested_class == 'unh1'
+    @names = [
+      'Donald B',
+      'Alexander	J',
+      'Eric S',
+      'Matthew	M',
+      'Samuel L',
+      'Kevin S',
+      'Thomas H',
+      'Mary D',
+      'Roxana M',
+      'John R',
+      'Sarah S',
+      'Eric M',
+      'Askar T',
+      'Clark M',
+      'Anitharaj S',
+      'JoAnn E',
+      'Aaron B',
+      'Shraddha B',
+      'Rupali M',
+      'Keira N',
+      'Anthony K',
+      'Jake O',
+      'Rebecca B',
+      'Noah S',
+      'Joy C'
+    ]
+  else
+    @names = ''
+  end
+
+  return { :students => @names }.to_json
+end
+
+get '/api/v1/fisttofive' do
+  content_type :json
+  return {:results => fist_to_five_array}.to_json
+end
+
+post '/api/v1/fisttofive' do
+  content_type :json
+  value = request.body.read
+
+  if value == 'reset'
+    fist_to_five_array = [0,0,0,0,0]
+  elsif [1,2,3,4,5].include?(value.to_i)
+    index = value.to_i - 1
+
+    fist_to_five_array[index] += 1
+  end
+
+  return {:results => fist_to_five_array}.to_json
+end
+
+
+# Sinatra/ERB routes
 get '/:class_program' do
   # determine which class we're working with
   class_program = params['class_program']
@@ -63,8 +155,6 @@ get '/:class_program/groups/:count' do
   if @groups.last.size != count
     i = 0
     @groups.last.each do |person|
-      # bug whereby the i is too large.  Need to change the iterator to
-      # loop through from 0 to @groups.size -1
       @groups[i].push(person)
       if i < @groups.size - 1
         i = i + 1
