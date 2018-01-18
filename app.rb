@@ -118,12 +118,14 @@ post '/api/v1/absent' do
 
   payload = JSON.parse(request.body.read)
 
-  if payload["checked"]
+  if payload["reset"]
+    absent = []
+  elsif payload["checked"]
     absent.push(payload["currentStudent"])
   else
     absent.delete(payload["currentStudent"])
   end
-  
+
   return {:absent => absent}.to_json
 end
 

@@ -58,17 +58,6 @@ class App extends Component {
 
   }
 
-  setGroupCount(event) {
-    this.setState({
-      groupCount: event.target.value
-    })
-  }
-
-  pickClass(event) {
-    this.setState({currentClassProgram: event.target.value});
-    this.fetchData(event.target.value)
-  }
-
   fetchData(classProgram) {
     let url = '/api/v1/students'
     let data = classProgram
@@ -87,30 +76,40 @@ class App extends Component {
       .then(body => {
         this.setState({
           students: body.students,
-          pickedStudents: [],
-          absentStudents: []
+          pickedStudents: []
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  pickClass(event) {
+    this.setState({
+      currentClassProgram: event.target.value,
+      randomStudent: '',
+      groupCount: 0
+    })
+    this.fetchData(event.target.value)
+    this.resetAbsent()
+  }
+
   randomStudent() {
     if (this.state.students.length !== 0) {
-    const randomIndex = Math.floor(Math.random() * this.state.students.length)
-    const luckyDuck = this.state.students[randomIndex]
+      // finds a random student to answer the question
+      const randomIndex = Math.floor(Math.random() * this.state.students.length)
+      const luckyDuck = this.state.students[randomIndex]
 
-    let updatedStudents = this.state.students.slice(); //copy array
-    updatedStudents.splice(randomIndex, 1); //remove element
+      // moves that student to "picked" list, so they won't be asked again until everyone in the class has answered
+      let updatedStudents = this.state.students.slice(); //copy array
+      updatedStudents.splice(randomIndex, 1); //remove element
 
-    this.setState({
-      randomStudent: luckyDuck,
-      pickedStudents: [...this.state.pickedStudents, luckyDuck],
-      students: updatedStudents
-      }
-      ,
-      console.log(this.state)
-    )
+      this.setState({
+        randomStudent: luckyDuck,
+        pickedStudents: [...this.state.pickedStudents, luckyDuck],
+        students: updatedStudents
+        }
+      )
     } else if (this.state.students.length === 0) {
+      // resets the set of students when everyone has been picked
       this.setState({
         students: this.state.pickedStudents,
         pickedStudents: ''
@@ -147,6 +146,38 @@ class App extends Component {
       </div>
     )
   }
+
+  resetAbsent() {
+    const url = 'api/v1/absent'
+    const payload = JSON.stringify({
+      reset: true
+    })
+    fetch(url, {method: "POST", body: payload})
+      .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage);
+          throw (error);
+        }
+      })
+      .then(response => response.json())
+      .then(body => {
+        this.setState({
+          absentStudents: body.absent
+        })
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+
+  }
+
+  setGroupCount(event) {
+    this.setState({
+      groupCount: event.target.value
+    })
+  }
+
 }
 
 export default App;

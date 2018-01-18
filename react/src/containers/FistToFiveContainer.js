@@ -17,6 +17,38 @@ class FistToFiveContainer extends Component {
     this.resetScores = this.resetScores.bind(this)
   }
 
+  buttonClick(event) {
+    const url = 'api/v1/fisttofive'
+    const value = event.target.getAttribute("value")
+
+    fetch(url, {method: "POST", body: value})
+      .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage);
+          throw (error);
+        }
+      })
+      .then(response => response.json())
+      .then(body => {
+        this.setState({
+          activeNumber: value,
+          fistToFiveResults: body.results
+        })
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  componentDidMount() {
+    // this.reloadScores = setInterval(() => this.getScores(), 2000)
+  }
+
+  componentWillUnMount() {
+    clearInterval(this.reloadScores)
+  }
+
   getScores() {
     const url = 'api/v1/fisttofive'
 
@@ -62,38 +94,6 @@ class FistToFiveContainer extends Component {
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
-  buttonClick(event) {
-    const url = 'api/v1/fisttofive'
-    const value = event.target.getAttribute("value")
-
-    fetch(url, {method: "POST", body: value})
-      .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          let errorMessage = `${response.status} (${response.statusText})`,
-            error = new Error(errorMessage);
-          throw (error);
-        }
-      })
-      .then(response => response.json())
-      .then(body => {
-        this.setState({
-          activeNumber: value,
-          fistToFiveResults: body.results
-        })
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
-  componentDidMount() {
-    this.reloadScores = setInterval(() => this.getScores(), 2000)
-  }
-
-  componentWillUnMount() {
-    clearInterval(this.reloadScores)
   }
 
   render() {

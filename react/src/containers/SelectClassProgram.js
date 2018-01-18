@@ -1,7 +1,4 @@
-import React, {Component} from 'react';
-
-// component dependencies
-import Student from '../components/Student'
+import React from 'react';
 
 const SelectClassProgram = props => {
   return(
