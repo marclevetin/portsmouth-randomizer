@@ -26,6 +26,36 @@ class App extends Component {
     this.setGroupCount = this.setGroupCount.bind(this);
     this.pickClass = this.pickClass.bind(this);
     this.randomStudent = this.randomStudent.bind(this);
+    this.handleAbsent = this.handleAbsent.bind(this)
+  }
+
+  handleAbsent(event) {
+    const currentStudent = event.target.value
+    const checkedValue = event.target.checked
+    const payload = JSON.stringify({
+      currentStudent: currentStudent,
+      checked: checkedValue
+    })
+    const url = 'api/v1/absent'
+
+    fetch(url, {method: "POST", body: payload})
+      .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage);
+          throw (error);
+        }
+      })
+      .then(response => response.json())
+      .then(body => {
+        this.setState({
+          absentStudents: body.absent
+        })
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+
   }
 
   setGroupCount(event) {
@@ -88,9 +118,11 @@ class App extends Component {
     }
   }
 
-
   render() {
-    const allStudents = (this.state.pickedStudents.length === 0) ? this.state.students : [...this.state.students,this.state.pickedStudents]
+    const allStudents = (this.state.pickedStudents.length === 0) ?
+      this.state.students :
+      [...this.state.students,this.state.pickedStudents]
+
     return(
       <div>
         <SelectClassProgram
@@ -106,7 +138,11 @@ class App extends Component {
           handleChange={this.setGroupCount}
         />
         <FistToFiveContainer />
-        <MarkStudentsAbsentContainer />
+        <MarkStudentsAbsentContainer
+          everyone={allStudents}
+          absent={this.state.absentStudents}
+          handleAbsent={this.handleAbsent}
+        />
 
       </div>
     )

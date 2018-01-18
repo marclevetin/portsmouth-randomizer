@@ -89,7 +89,7 @@ class FistToFiveContainer extends Component {
   }
 
   componentDidMount() {
-    this.reloadScores = setInterval(() => this.getScores(), 2000)
+    // this.reloadScores = setInterval(() => this.getScores(), 2000)
   }
 
   componentWillUnMount() {

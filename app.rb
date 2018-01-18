@@ -113,6 +113,20 @@ post '/api/v1/fisttofive' do
   return {:results => fist_to_five_array}.to_json
 end
 
+post '/api/v1/absent' do
+  content_type :json
+
+  payload = JSON.parse(request.body.read)
+
+  if payload["checked"]
+    absent.push(payload["currentStudent"])
+  else
+    absent.delete(payload["currentStudent"])
+  end
+  
+  return {:absent => absent}.to_json
+end
+
 
 # Sinatra/ERB routes
 get '/:class_program' do
