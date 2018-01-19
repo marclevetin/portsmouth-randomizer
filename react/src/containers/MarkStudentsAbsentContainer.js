@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 
 // component dependencies
-import Checkbox from '../components/Checkbox'
+import Checkbox from '../components/Checkbox';
+import Form from '../components/Form';
 
 class MarkStudentsAbsentContainer extends Component {
   constructor(props) {
@@ -23,9 +24,10 @@ class MarkStudentsAbsentContainer extends Component {
   }
 
   render(){
+    // ensures that students are presented in the same order every time.
     this.props.everyone.sort();
 
-
+    // assembles the list of checkboxes for the form
     const allCheckboxes = this.props.everyone.map(student => {
       const isAbsent = this.props.absent.includes(student)
       return(
@@ -39,16 +41,15 @@ class MarkStudentsAbsentContainer extends Component {
       )
     });
 
+    const form = <Form
+      checkboxes={allCheckboxes}
+      label="Who's absent"
+    />;
+
     return(
       <div>
-        <h2>Absent students</h2>
-        <p onClick={this.toggleView}>{(this.state.show) ? 'Hide students' : 'Show students' }</p>
-        <form>
-          <label>
-            {(this.state.show) ? 'Who\'s absent?' : '' }
-            {(this.state.show) ? allCheckboxes : '' }
-          </label>
-        </form>
+        <p onClick={this.toggleView}>{(this.state.show) ? 'Hide students' : 'Mark students absent' }</p>
+        {(this.state.show) ? form : ''}
       </div>
     )
   }

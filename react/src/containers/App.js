@@ -114,6 +114,11 @@ class App extends Component {
 
     return(
       <div>
+        <MarkStudentsAbsentContainer
+          everyone={allStudents}
+          absent={this.state.absentStudents}
+          handleAbsent={this.handleAbsent}
+        />
         <PickRandomStudent
           handleClick={this.randomStudent}
           randomStudent={this.state.randomStudent}
@@ -126,12 +131,6 @@ class App extends Component {
         <FistToFiveContainer
           everyone={allStudents}
         />
-        <MarkStudentsAbsentContainer
-          everyone={allStudents}
-          absent={this.state.absentStudents}
-          handleAbsent={this.handleAbsent}
-        />
-
       </div>
     )
   }
