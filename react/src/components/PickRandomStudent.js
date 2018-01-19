@@ -1,11 +1,18 @@
 import React, {Component} from 'react';
 
+// component dependencies
+import Button from './Button'
+
 const PickRandomStudent = props => {
   if (!props.randomStudent) {
     return(
       <div>
         <h2>Pick a Random Student</h2>
-        <button onClick={props.handleClick}>Get me a student!</button>
+        <Button
+          handleClick={props.handleClick}
+          value='Get a student'
+          className='square'
+        />
       </div>
     )
   } else {
@@ -13,7 +20,11 @@ const PickRandomStudent = props => {
       <div>
         <h2>Pick a Random Student</h2>
         <h3>{props.randomStudent} will answer the question!</h3>
-        <button onClick={props.handleClick}>Get me another student!</button>
+        <Button
+          handleClick={props.handleClick}
+          value='Get another student'
+          className='square'
+        />
       </div>
     )
   }

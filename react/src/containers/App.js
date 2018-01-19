@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 
 // containers dependencies
-import SelectClassProgram from './SelectClassProgram';
 import StudentGroupContainer from './StudentGroupContainer';
 import FistToFiveContainer from './FistToFiveContainer';
 import MarkStudentsAbsentContainer from './MarkStudentsAbsentContainer';
 
 // component dependencies
+import SelectClassProgram from '../components/SelectClassProgram';
 import PickRandomStudent from '../components/PickRandomStudent';
 import Student from '../components/Student';
 
@@ -118,9 +118,7 @@ class App extends Component {
   }
 
   render() {
-    const allStudents = (this.state.pickedStudents.length === 0) ?
-      this.state.students :
-      [...this.state.students,this.state.pickedStudents]
+    const allStudents = (this.state.pickedStudents.length === 0) ? this.state.students : [...this.state.students,this.state.pickedStudents]
 
     return(
       <div>
@@ -136,7 +134,9 @@ class App extends Component {
           groupCount={this.state.groupCount}
           handleChange={this.setGroupCount}
         />
-        <FistToFiveContainer />
+        <FistToFiveContainer
+          everyone={allStudents}
+        />
         <MarkStudentsAbsentContainer
           everyone={allStudents}
           absent={this.state.absentStudents}

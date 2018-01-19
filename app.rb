@@ -100,10 +100,16 @@ end
 
 post '/api/v1/fisttofive' do
   content_type :json
-  value = request.body.read
-
+  value = JSON.parse(request.body.read)["value"]
+  number = JSON.parse(request.body.read)["number"]
+binding.pry
   if value == 'reset'
     fist_to_five_array = [0,0,0,0,0]
+
+  elsif value == 'change'
+    index = number.to_i - 1
+
+    fist_to_five_array[index] -= 1
   elsif [1,2,3,4,5].include?(value.to_i)
     index = value.to_i - 1
 
