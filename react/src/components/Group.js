@@ -9,6 +9,6 @@ const Group = props => {
       </p>
     </div>
   )
-}
+};
 
 export default Group;

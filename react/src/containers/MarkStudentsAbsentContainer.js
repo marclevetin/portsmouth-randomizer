@@ -1,34 +1,57 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 // component dependencies
 import Checkbox from '../components/Checkbox'
 
-const MarkStudentsAbsentContainer = props => {
-  props.everyone.sort()
+class MarkStudentsAbsentContainer extends Component {
+  constructor(props) {
+    super(props)
 
-  const allCheckboxes = props.everyone.map(student => {
-    const isAbsent = props.absent.includes(student)
+    this.state = {
+      show: false
+    }
+
+    this.toggleView = this.toggleView.bind(this);
+  }
+
+  toggleView() {
+    const currentState = this.state.show;
+
+    this.setState({
+      show: !currentState
+    });
+  }
+
+  render(){
+    this.props.everyone.sort();
+
+
+    const allCheckboxes = this.props.everyone.map(student => {
+      const isAbsent = this.props.absent.includes(student)
+      return(
+        <Checkbox
+          key={Math.random()}
+          form="absent"
+          name={student}
+          onChange={this.props.handleAbsent}
+          checked={isAbsent}
+        />
+      )
+    });
+
     return(
-      <Checkbox
-        key={Math.random()}
-        form="absent"
-        name={student}
-        onChange={props.handleAbsent}
-        checked={isAbsent}
-      />
+      <div>
+        <h2>Absent students</h2>
+        <p onClick={this.toggleView}>{(this.state.show) ? 'Hide students' : 'Show students' }</p>
+        <form>
+          <label>
+            {(this.state.show) ? 'Who\'s absent?' : '' }
+            {(this.state.show) ? allCheckboxes : '' }
+          </label>
+        </form>
+      </div>
     )
-  })
-
-  return(
-    <div>
-      <form>
-        <label>
-          Who's absent?
-          {allCheckboxes}
-        </label>
-      </form>
-    </div>
-  )
+  }
 }
 
 export default MarkStudentsAbsentContainer;

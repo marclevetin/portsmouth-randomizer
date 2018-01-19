@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 // component dependencies
-import Button from './Button'
+import Button from './Button';
 
 const PickRandomStudent = props => {
   if (!props.randomStudent) {
@@ -14,7 +14,7 @@ const PickRandomStudent = props => {
           className='square'
         />
       </div>
-    )
+    );
   } else {
     return(
       <div>
@@ -28,6 +28,6 @@ const PickRandomStudent = props => {
       </div>
     )
   }
-}
+};
 
 export default PickRandomStudent;

@@ -7,6 +7,6 @@ const Student = props => {
       {props.index}
     </div>
   )
-}
+};
 
 export default Student;

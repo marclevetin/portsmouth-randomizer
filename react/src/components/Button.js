@@ -6,6 +6,6 @@ const Button = props => {
       <p className={props.className} onClick={props.handleClick} value={props.value}>{props.value}</p>
     </div>
   )
-}
+};
 
 export default Button;

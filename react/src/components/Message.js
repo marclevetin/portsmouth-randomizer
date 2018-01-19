@@ -7,6 +7,6 @@ const Message = props => {
       <p onClick={props.handleClick}>{props.linkText}</p>
     </div>
   )
-}
+};
 
 export default Message;

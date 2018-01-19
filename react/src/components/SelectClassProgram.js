@@ -15,6 +15,6 @@ const SelectClassProgram = props => {
       </form>
     </div>
   )
-}
+};
 
 export default SelectClassProgram;

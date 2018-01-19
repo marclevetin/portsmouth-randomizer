@@ -2,28 +2,29 @@
 import React, {Component} from 'react';
 
 // component dependencies
-import Group from '../components/Group'
+import Group from '../components/Group';
 
 class StudentGroupContainer extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-    }
+      
+    };
 
-    this.createGroups = this.createGroups.bind(this)
+    this.createGroups = this.createGroups.bind(this);
   }
 
   createGroups(array, size) {
     // this opening if is required for initial renders and when the box is empty
     if (size === 0 || size === '') {
-      return []
+      return [];
     } else {
       // creates the initial set of groups of X size, plus a possible set of "remainder" students as the final group
       let groups = []
       for (let i = 0; i < array.length; i += size) {
         groups.push(array.slice(i, i + size));
-      }
+      };
 
       // distribute "remainder" students from the last group to the others.
       let lastGroup = groups[groups.length - 1]
@@ -42,7 +43,7 @@ class StudentGroupContainer extends Component {
         }
       }
       // the if block above distributes all "remainders", but it leaves an empty array element that needs to be removed.
-      groups.pop()
+      groups.pop();
 
       return groups;
     }
@@ -63,8 +64,8 @@ class StudentGroupContainer extends Component {
           lead={group[0]}
           participants={group.slice(1)}
         />
-      )
-    })
+      );
+    });
 
     return(
       <div>
@@ -78,6 +79,6 @@ class StudentGroupContainer extends Component {
     )
   }
 
-}
+};
 
 export default StudentGroupContainer;

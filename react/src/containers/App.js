@@ -24,21 +24,21 @@ class App extends Component {
 
     this.setGroupCount = this.setGroupCount.bind(this);
     this.randomStudent = this.randomStudent.bind(this);
-    this.handleAbsent = this.handleAbsent.bind(this)
+    this.handleAbsent = this.handleAbsent.bind(this);
   }
 
   componentDidMount() {
-    this.fetchData(window.location.pathname)
+    this.fetchData(window.location.pathname);
   }
 
   handleAbsent(event) {
-    const currentStudent = event.target.value
-    const checkedValue = event.target.checked
+    const currentStudent = event.target.value;
+    const checkedValue = event.target.checked;
     const payload = JSON.stringify({
       currentStudent: currentStudent,
       checked: checkedValue
-    })
-    const url = 'api/v1/absent'
+    });
+    const url = 'api/v1/absent';
 
     fetch(url, {method: "POST", body: payload})
       .then(response => {
@@ -61,8 +61,8 @@ class App extends Component {
   }
 
   fetchData(classProgram) {
-    let data = classProgram
-    let url = '/api/v1/students' + classProgram
+    let data = classProgram;
+    let url = '/api/v1/students' + classProgram;
 
     fetch(url)
       .then(response => {
@@ -87,8 +87,8 @@ class App extends Component {
   randomStudent() {
     if (this.state.students.length !== 0) {
       // finds a random student to answer the question
-      const randomIndex = Math.floor(Math.random() * this.state.students.length)
-      const luckyDuck = this.state.students[randomIndex]
+      const randomIndex = Math.floor(Math.random() * this.state.students.length);
+      const luckyDuck = this.state.students[randomIndex];
 
       // moves that student to "picked" list, so they won't be asked again until everyone in the class has answered
       let updatedStudents = this.state.students.slice(); //copy array
@@ -164,7 +164,7 @@ class App extends Component {
   setGroupCount(event) {
     this.setState({
       groupCount: event.target.value
-    })
+    });
   }
 
 }

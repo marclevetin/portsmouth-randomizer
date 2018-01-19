@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 
 // component dependencies
-import Button from '../components/Button'
-import Bar from '../components/Bar'
-import Message from '../components/Message'
+import Button from '../components/Button';
+import Bar from '../components/Bar';
+import Message from '../components/Message';
 
 class FistToFiveContainer extends Component {
   constructor(props) {
@@ -15,21 +15,21 @@ class FistToFiveContainer extends Component {
       buttonClicked: false
     }
 
-    this.buttonClick = this.buttonClick.bind(this)
-    this.changeAnswer = this.changeAnswer.bind(this)
-    this.getScores = this.getScores.bind(this)
-    this.resetScores = this.resetScores.bind(this)
+    this.buttonClick = this.buttonClick.bind(this);
+    this.changeAnswer = this.changeAnswer.bind(this);
+    this.getScores = this.getScores.bind(this);
+    this.resetScores = this.resetScores.bind(this);
   }
 
   buttonClick(event) {
-    const url = 'api/v1/fisttofive'
-    const clickedNumber = event.target.getAttribute("value")
+    const url = 'api/v1/fisttofive';
+    const clickedNumber = event.target.getAttribute("value");
     const payload = JSON.stringify({
       action: 'add',
       number: clickedNumber
-    })
+    });
 
-    this.setState({buttonClicked: true})
+    this.setState({buttonClicked: true});
 
     fetch(url, {method: "POST", body: payload})
       .then(response => {
@@ -46,18 +46,18 @@ class FistToFiveContainer extends Component {
         this.setState({
           activeNumber: clickedNumber,
           fistToFiveResults: body.results
-        })
+        });
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   changeAnswer() {
-    const url = 'api/v1/fisttofive'
-    const activeNumber = this.state.activeNumber
+    const url = 'api/v1/fisttofive';
+    const activeNumber = this.state.activeNumber;
     const payload = JSON.stringify({
       number: activeNumber,
       action: 'change'
-    })
+    });
 
     fetch(url, {method: "POST", body: payload })
       .then(response => {
@@ -75,21 +75,21 @@ class FistToFiveContainer extends Component {
           activeNumber: '',
           fistToFiveResults: body.results,
           buttonClicked: false
-        })
+        });
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   componentDidMount() {
-    this.reloadScores = setInterval(() => this.getScores(), 2000)
+    this.reloadScores = setInterval(() => this.getScores(), 2000);
   }
 
   componentWillUnMount() {
-    clearInterval(this.reloadScores)
+    clearInterval(this.reloadScores);
   }
 
   getScores() {
-    const url = 'api/v1/fisttofive'
+    const url = 'api/v1/fisttofive';
 
     fetch(url)
       .then(response => {
@@ -106,18 +106,18 @@ class FistToFiveContainer extends Component {
         this.setState({
           activeNumber: '',
           fistToFiveResults: body.results
-        })
+        });
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   resetScores() {
-    const url = 'api/v1/fisttofive'
-    const value = 'reset'
+    const url = 'api/v1/fisttofive';
+    const value = 'reset';
     const payload = JSON.stringify({
       number: '',
       action: 'reset'
-    })
+    });
 
     fetch(url, {method: "POST", body: payload})
       .then(response => {
@@ -135,7 +135,7 @@ class FistToFiveContainer extends Component {
           activeNumber: '',
           fistToFiveResults: body.results,
           buttonClicked: false
-        })
+        });
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -162,9 +162,9 @@ class FistToFiveContainer extends Component {
       })
 
 
-    const classSize = (this.props.everyone.length) ? this.props.everyone.length : 1
+    const classSize = (this.props.everyone.length) ? this.props.everyone.length : 1;
     const allBars = this.state.fistToFiveResults.map((value, index) => {
-      let barPercentage = Math.floor(value / classSize * 100)
+      let barPercentage = Math.floor(value / classSize * 100);
 
       return(
         <Bar
@@ -176,7 +176,7 @@ class FistToFiveContainer extends Component {
           length={barPercentage}
         />
       )
-    })
+    });
 
 
     return(
@@ -193,7 +193,6 @@ class FistToFiveContainer extends Component {
       </div>
     )
   }
-
 }
 
 export default FistToFiveContainer;
