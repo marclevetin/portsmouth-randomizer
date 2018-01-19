@@ -29,6 +29,10 @@ class App extends Component {
     this.handleAbsent = this.handleAbsent.bind(this)
   }
 
+  componentDidMount() {
+    this.fetchData(window.location.pathname)
+  }
+
   handleAbsent(event) {
     const currentStudent = event.target.value
     const checkedValue = event.target.checked
@@ -59,10 +63,10 @@ class App extends Component {
   }
 
   fetchData(classProgram) {
-    let url = '/api/v1/students'
     let data = classProgram
-
-    fetch(url, {method: "POST", body: data})
+    let url = '/api/v1/students' + classProgram
+debugger;
+    fetch(url)
       .then(response => {
         if (response.ok) {
           return response;

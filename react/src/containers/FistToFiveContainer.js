@@ -23,13 +23,15 @@ class FistToFiveContainer extends Component {
 
   buttonClick(event) {
     const url = 'api/v1/fisttofive'
-    const value = JSON.stringify({
-      value: event.target.getAttribute("value")
+    const clickedNumber = event.target.getAttribute("value")
+    const payload = JSON.stringify({
+      action: 'add',
+      number: clickedNumber
     })
 
     this.setState({buttonClicked: true})
 
-    fetch(url, {method: "POST", body: value})
+    fetch(url, {method: "POST", body: payload})
       .then(response => {
         if (response.ok) {
           return response;
@@ -42,7 +44,7 @@ class FistToFiveContainer extends Component {
       .then(response => response.json())
       .then(body => {
         this.setState({
-          activeNumber: value,
+          activeNumber: clickedNumber,
           fistToFiveResults: body.results
         })
       })
@@ -54,7 +56,7 @@ class FistToFiveContainer extends Component {
     const activeNumber = this.state.activeNumber
     const payload = JSON.stringify({
       number: activeNumber,
-      value: 'change'
+      action: 'change'
     })
 
     fetch(url, {method: "POST", body: payload })
@@ -112,8 +114,12 @@ class FistToFiveContainer extends Component {
   resetScores() {
     const url = 'api/v1/fisttofive'
     const value = 'reset'
+    const payload = JSON.stringify({
+      number: '',
+      action: 'reset'
+    })
 
-    fetch(url, {method: "POST", body: value})
+    fetch(url, {method: "POST", body: payload})
       .then(response => {
         if (response.ok) {
           return response;
