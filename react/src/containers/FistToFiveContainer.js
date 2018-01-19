@@ -81,7 +81,7 @@ class FistToFiveContainer extends Component {
   }
 
   componentDidMount() {
-    // this.reloadScores = setInterval(() => this.getScores(), 2000)
+    this.reloadScores = setInterval(() => this.getScores(), 2000)
   }
 
   componentWillUnMount() {
@@ -133,7 +133,8 @@ class FistToFiveContainer extends Component {
       .then(body => {
         this.setState({
           activeNumber: '',
-          fistToFiveResults: body.results
+          fistToFiveResults: body.results,
+          buttonClicked: false
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));

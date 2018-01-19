@@ -71,8 +71,9 @@ class StudentGroupContainer extends Component {
         <h2>Group creator</h2>
         <p>Enter number of people per group</p>
         <input type="number" value={this.props.groupCount} onChange={this.props.handleChange}></input>
-        <hr />
-        {groupComponents}
+        <div className="flex-container">
+          {groupComponents}
+        </div>
       </div>
     )
   }

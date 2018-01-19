@@ -15,7 +15,6 @@ class App extends Component {
     super(props)
 
     this.state = {
-      currentClassProgram: 'select',
       students: [],
       randomStudent: '',
       pickedStudents: [],
@@ -24,7 +23,6 @@ class App extends Component {
     }
 
     this.setGroupCount = this.setGroupCount.bind(this);
-    this.pickClass = this.pickClass.bind(this);
     this.randomStudent = this.randomStudent.bind(this);
     this.handleAbsent = this.handleAbsent.bind(this)
   }
@@ -65,7 +63,7 @@ class App extends Component {
   fetchData(classProgram) {
     let data = classProgram
     let url = '/api/v1/students' + classProgram
-debugger;
+
     fetch(url)
       .then(response => {
         if (response.ok) {
@@ -84,16 +82,6 @@ debugger;
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
-
-  pickClass(event) {
-    this.setState({
-      currentClassProgram: event.target.value,
-      randomStudent: '',
-      groupCount: 0
-    })
-    this.fetchData(event.target.value)
-    this.resetAbsent()
   }
 
   randomStudent() {
@@ -126,9 +114,6 @@ debugger;
 
     return(
       <div>
-        <SelectClassProgram
-          handleChange={this.pickClass}
-        />
         <PickRandomStudent
           handleClick={this.randomStudent}
           randomStudent={this.state.randomStudent}
