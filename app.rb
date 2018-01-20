@@ -53,7 +53,7 @@ get '/api/v1/fisttofive/:class_program' do
   class_program = params[:class_program]
   fist_to_five_arrays[class_program]
 
-  return {:results => fist_to_five_array}.to_json
+  return {:results => fist_to_five_arrays[class_program]}.to_json
 end
 
 post '/api/v1/fisttofive' do
