@@ -51,7 +51,12 @@ get '/api/v1/fisttofive/:class_program' do
   content_type :json
 
   class_program = params[:class_program]
-  fist_to_five_arrays[class_program]
+
+  if !fist_to_five_arrays[class_program]
+    fist_to_five_arrays[class_program] = [0,0,0,0,0]
+  end
+
+  # fist_to_five_arrays[class_program]
 
   return {:results => fist_to_five_arrays[class_program]}.to_json
 end
