@@ -22,11 +22,13 @@ class FistToFiveContainer extends Component {
   }
 
   buttonClick(event) {
+    const classProgram = location.pathname.slice(1);
     const url = 'api/v1/fisttofive';
     const clickedNumber = event.target.getAttribute("value");
     const payload = JSON.stringify({
       action: 'add',
-      number: clickedNumber
+      number: clickedNumber,
+      classProgram: classProgram
     });
 
     this.setState({buttonClicked: true});
@@ -52,11 +54,13 @@ class FistToFiveContainer extends Component {
   }
 
   changeAnswer() {
+    const classProgram = location.pathname.slice(1);
     const url = 'api/v1/fisttofive';
     const activeNumber = this.state.activeNumber;
     const payload = JSON.stringify({
       number: activeNumber,
-      action: 'change'
+      action: 'change',
+      classProgram: classProgram
     });
 
     fetch(url, {method: "POST", body: payload })
@@ -90,6 +94,7 @@ class FistToFiveContainer extends Component {
 
   getScores() {
     const url = 'api/v1/fisttofive';
+    const classProgram = location.pathname.slice(1);
 
     fetch(url)
       .then(response => {
@@ -105,18 +110,21 @@ class FistToFiveContainer extends Component {
       .then(body => {
         this.setState({
           activeNumber: '',
-          fistToFiveResults: body.results
+          fistToFiveResults: body.results,
+          classProgram: classProgram
         });
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   resetScores() {
+    const classProgram = location.pathname.slice(1);
     const url = 'api/v1/fisttofive';
     const value = 'reset';
     const payload = JSON.stringify({
       number: '',
-      action: 'reset'
+      action: 'reset',
+      classProgram: classProgram
     });
 
     fetch(url, {method: "POST", body: payload})

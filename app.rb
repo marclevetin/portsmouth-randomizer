@@ -20,8 +20,8 @@ picked = []
 # students that have been marked "absent"
 absent = []
 
-# fist to five data:
-fist_to_five_array = [0,0,0,0,0]
+# fist to five data.  It's a hash because each class will have its own key/value pair
+fist_to_five_arrays = {}
 
 get '/' do
   erb :index
@@ -47,8 +47,12 @@ get '/api/v1/students/:class_program' do
   return { :students => @names }.to_json
 end
 
-get '/api/v1/fisttofive' do
+get '/api/v1/fisttofive/:class_program' do
   content_type :json
+
+  class_program = params[:class_program]
+  fist_to_five_arrays[class_program]
+
   return {:results => fist_to_five_array}.to_json
 end
 
@@ -62,21 +66,27 @@ post '/api/v1/fisttofive' do
   # these variables improve readability.
   action = payload["action"]
   number = payload["number"]
+  class_program = payload["classProgram"]
+
+  # creates the data array if it doesn't exist.
+  if !fist_to_five_arrays[class_program]
+    fist_to_five_arrays[class_program] = [0,0,0,0,0]
+  end
 
   if action == 'reset'
-    fist_to_five_array = [0,0,0,0,0]
+    fist_to_five_arrays[class_program] = [0,0,0,0,0]
 
   elsif action == 'change'
     index = number.to_i - 1
 
-    fist_to_five_array[index] -= 1
+    fist_to_five_arrays[class_program][index] -= 1
   elsif action == 'add'
     index = number.to_i - 1
 
-    fist_to_five_array[index] += 1
+    fist_to_five_arrays[class_program][index] += 1
   end
 
-  return {:results => fist_to_five_array}.to_json
+  return {:results => fist_to_five_arrays[class_program]}.to_json
 end
 
 post '/api/v1/absent' do

@@ -86,7 +86,13 @@ class App extends Component {
 
   randomStudent() {
     if (this.state.students.length !== 0) {
+      // removes absent students from the list.
+      // let activeStudents = this.state.students.slice(); // copy array
+      // let presentStudents = activeStudents.filter(student => !this.state.absentStudents.includes(student))
+      //
+
       // finds a random student to answer the question
+      // const randomIndex = Math.floor(Math.random() * presentStudents.length);
       const randomIndex = Math.floor(Math.random() * this.state.students.length);
       const luckyDuck = this.state.students[randomIndex];
 
