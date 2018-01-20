@@ -93,8 +93,8 @@ class FistToFiveContainer extends Component {
   }
 
   getScores() {
-    const url = 'api/v1/fisttofive';
-    const classProgram = location.pathname.slice(1);
+    const classProgram = location.pathname;
+    const url = 'api/v1/fisttofive' + classProgram;
 
     fetch(url)
       .then(response => {
