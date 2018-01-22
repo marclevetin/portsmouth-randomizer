@@ -28,7 +28,7 @@ class FistToFiveContainer extends Component {
     const payload = JSON.stringify({
       action: 'add',
       number: clickedNumber,
-      classProgram: classProgram
+      classProgram: classProgram,
     });
 
     this.setState({buttonClicked: true});
@@ -85,7 +85,7 @@ class FistToFiveContainer extends Component {
   }
 
   componentDidMount() {
-    this.reloadScores = setInterval(() => this.getScores(), 2000);
+    this.reloadScores = setInterval(() => this.getScores(), 500);
   }
 
   componentWillUnMount() {
@@ -109,10 +109,17 @@ class FistToFiveContainer extends Component {
       .then(response => response.json())
       .then(body => {
         this.setState({
-          activeNumber: '',
           fistToFiveResults: body.results,
           classProgram: classProgram
         });
+
+        if (body.results[5] == true) {
+          this.setState({
+            activeNumber: '',
+            fistToFiveResults: [],
+            buttonClicked: false
+          })
+        }
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -121,6 +128,7 @@ class FistToFiveContainer extends Component {
     const classProgram = location.pathname.slice(1);
     const url = 'api/v1/fisttofive';
     const value = 'reset';
+    const now = Date.now()
     const payload = JSON.stringify({
       number: '',
       action: 'reset',

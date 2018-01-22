@@ -53,10 +53,8 @@ get '/api/v1/fisttofive/:class_program' do
   class_program = params[:class_program]
 
   if !fist_to_five_arrays[class_program]
-    fist_to_five_arrays[class_program] = [0,0,0,0,0]
+    fist_to_five_arrays[class_program] = [0,0,0,0,0, nil]
   end
-
-  # fist_to_five_arrays[class_program]
 
   return {:results => fist_to_five_arrays[class_program]}.to_json
 end
@@ -75,20 +73,22 @@ post '/api/v1/fisttofive' do
 
   # creates the data array if it doesn't exist.
   if !fist_to_five_arrays[class_program]
-    fist_to_five_arrays[class_program] = [0,0,0,0,0]
+    fist_to_five_arrays[class_program] = [0,0,0,0,0, nil]
   end
 
   if action == 'reset'
-    fist_to_five_arrays[class_program] = [0,0,0,0,0]
+    fist_to_five_arrays[class_program] = [0,0,0,0,0, true]
 
   elsif action == 'change'
     index = number.to_i - 1
 
     fist_to_five_arrays[class_program][index] -= 1
+    fist_to_five_arrays[class_program][-1] = false
   elsif action == 'add'
     index = number.to_i - 1
 
     fist_to_five_arrays[class_program][index] += 1
+    fist_to_five_arrays[class_program][-1] = false
   end
 
   return {:results => fist_to_five_arrays[class_program]}.to_json
