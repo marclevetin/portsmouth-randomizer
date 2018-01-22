@@ -9,7 +9,7 @@ class StudentGroupContainer extends Component {
     super(props)
 
     this.state = {
-      
+
     };
 
     this.createGroups = this.createGroups.bind(this);

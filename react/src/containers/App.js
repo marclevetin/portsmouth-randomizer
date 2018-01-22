@@ -92,7 +92,6 @@ class App extends Component {
       //
 
       // finds a random student to answer the question
-      // const randomIndex = Math.floor(Math.random() * presentStudents.length);
       const randomIndex = Math.floor(Math.random() * this.state.students.length);
       const luckyDuck = this.state.students[randomIndex];
 
@@ -171,7 +170,6 @@ class App extends Component {
       groupCount: event.target.value
     });
   }
-
 }
 
 export default App;

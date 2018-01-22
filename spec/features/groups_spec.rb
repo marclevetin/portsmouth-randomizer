@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "groups" do
+xfeature "groups" do
   scenario "groups page loads with appropriate count of students (2)" do
     visit '/unh/groups/2'
     expect(page).to have_content("Groups of 2")
