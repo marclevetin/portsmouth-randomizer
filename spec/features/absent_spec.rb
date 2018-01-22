@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "absent students" do
+xfeature "absent students" do
   scenario "absent link appears" do
     visit '/unh'
     expect(page).to have_content("Mark folks absent")
