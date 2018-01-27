@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
+ruby '2.3.3'
+
 gem 'sinatra'
-gem 'dotenv', '~> 2.1', '>= 2.1.1'
 gem 'pry'
 
 group :development, :test do

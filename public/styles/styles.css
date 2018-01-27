@@ -1,0 +1,78 @@
+/*
+  colors
+  bright blue: #65bcff
+  blue: #0091fe
+  gray: #656565
+  black: #000000
+  white: #ffffff
+*/
+
+/* fonts */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open Sans', sans-serif;
+}
+
+p {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-image: url("../assets/grey_wash_wall.png");
+
+}
+
+.app {
+  background-color: #efefef;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.square {
+  background-color: #65bcff;
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  margin: auto;
+  padding: 10px;
+  border-radius: 10%;
+  text-align: center;
+  font-size: 150%;
+}
+
+.circle {
+  background-color: #65bcff;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  text-align: center;
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  font-size: 300%;
+  line-height: 2;
+}
+
+.group {
+  background-color: #65bcff;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10%;
+  height: 200px;
+  width: 200px;
+  display: inline-block;
+}
+
+.bar {
+  background-color: #65bcff;
+  padding: 10px;
+  margin: 10px;
+  max-width: 98%;
+  white-space: nowrap;
+}
+
+#one, #two, #three, #four, #five {
+
+}
