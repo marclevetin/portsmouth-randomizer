@@ -15,11 +15,15 @@ class StudentGroupContainer extends Component {
     this.createGroups = this.createGroups.bind(this);
   }
 
+
   createGroups(array, size) {
     // this opening if is required for initial renders and when the box is empty
     if (size === 0 || size === '') {
       return [];
+    } else if (size > array.length) {
+      return [];
     } else {
+
       // creates the initial set of groups of X size, plus a possible set of "remainder" students as the final group
       let groups = []
       for (let i = 0; i < array.length; i += size) {
@@ -49,7 +53,13 @@ class StudentGroupContainer extends Component {
     }
   }
 
+
+
   render() {
+    // is the component in error?
+    const errorStyles = (this.props.error) ? "error" : "";
+    const errorMessage = (this.props.error) ? `Please enter a number smaller than ${this.props.everyone.length}` : '';
+
     // randomize students
     const randomizedStudents = this.props.everyone.sort((a, b) => 0.5 - Math.random())
 
@@ -70,8 +80,10 @@ class StudentGroupContainer extends Component {
     return(
       <div>
         <h2>Group creator</h2>
-        <p>Enter number of people per group</p>
-        <input type="number" value={this.props.groupCount} onChange={this.props.handleChange}></input>
+        <p>Enter number of people per group:</p>
+          <input type="number" className={errorStyles} value={this.props.groupCount} onChange={this.props.handleChange}></input>
+          <br />{errorMessage}
+
         <div className="flex-container">
           {groupComponents}
         </div>

@@ -19,12 +19,14 @@ class App extends Component {
       randomStudent: '',
       pickedStudents: [],
       absentStudents: [],
-      groupCount: 0
+      groupCount: 0,
+      groupSizeError: false
     }
 
     this.setGroupCount = this.setGroupCount.bind(this);
     this.randomStudent = this.randomStudent.bind(this);
     this.handleAbsent = this.handleAbsent.bind(this);
+    this.validateGroups = this.validateGroups.bind(this);
   }
 
   componentDidMount() {
@@ -132,6 +134,7 @@ class App extends Component {
           everyone={allStudents}
           groupCount={this.state.groupCount}
           handleChange={this.setGroupCount}
+          error={this.state.groupSizeError}
         />
         <FistToFiveContainer
           everyone={allStudents}
@@ -166,9 +169,22 @@ class App extends Component {
   }
 
   setGroupCount(event) {
+    this.validateGroups(event.target.value);
     this.setState({
       groupCount: event.target.value
     });
+  }
+
+  validateGroups(size) {
+    if (size > this.state.students.length) {
+      this.setState({
+        groupSizeError: true
+      })
+    } else {
+      this.setState({
+        groupSizeError: false
+      })
+    }
   }
 }
 

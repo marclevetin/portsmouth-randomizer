@@ -73,6 +73,7 @@ body {
   white-space: nowrap;
 }
 
-#one, #two, #three, #four, #five {
-
+.error {
+  border: 3px solid red;
+  background-color: #ffe6e6;
 }
