@@ -40,6 +40,8 @@ get '/api/v1/students/:class_program' do
     @names = DATA::UNH
   elsif requested_class == 'unh1'
     @names = DATA::UNH1
+  elsif requested_class == 'unh2'
+    @names = DATA::UNH2
   else
     @names = ''
   end

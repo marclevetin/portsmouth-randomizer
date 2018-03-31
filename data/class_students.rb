@@ -54,4 +54,29 @@ module DATA
     'Noah S',
     'Joy C'
   ]
+
+  UNH2 = [
+    'Adam L',
+    'Amy M',
+    'Christian D',
+    'Corey D',
+    'Dave R',
+    'Gregg D',
+    'Ian V',
+    'James B',
+    'Jashan A',
+    'Jason M.',
+    'Jason Mc.',
+    'Jesse L',
+    'Jessica S',
+    'Josh H',
+    'Matthew E',
+    'Paul L',
+    'Robert H',
+    'Sean H',
+    'Shelby L',
+    'Steve B',
+    'Steven H',
+    'Tylor P'
+  ]
 end
