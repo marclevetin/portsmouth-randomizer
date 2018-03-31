@@ -166,10 +166,10 @@ class FistToFiveContainer extends Component {
         linkText='Change answer'
         handleClick={this.changeAnswer}
       /> :
-      [1,2,3,4,5].map(value => {
+      [1,2,3,4,5].map((value, index) => {
         return(
           <Button
-            key={Math.random()}
+            key={'button' + index}
             value={value}
             handleClick={this.buttonClick}
             className='circle'
@@ -179,12 +179,12 @@ class FistToFiveContainer extends Component {
 
 
     const classSize = (this.props.everyone.length) ? this.props.everyone.length : 1;
-    const allBars = this.state.fistToFiveResults.map((value, index) => {
+    const allBars = this.state.fistToFiveResults.filter(number => typeof number === 'number').map((value, index) => {
       let barPercentage = Math.floor(value / classSize * 100);
 
       return(
         <Bar
-          key={Math.random()}
+          key={'bar' + index}
           className='bar'
           id={value + 1}
           text={index + 1}
