@@ -61,11 +61,9 @@ module DATA
     'Christian D',
     'Corey D',
     'Dave R',
-    'Gregg D',
     'Ian V',
     'James B',
     'Jashan A',
-    'Jason M.',
     'Jason Mc.',
     'Jesse L',
     'Jessica S',
@@ -77,6 +75,7 @@ module DATA
     'Shelby L',
     'Steve B',
     'Steven H',
-    'Tylor P'
+    'Tylor P',
+    'Molly Z'
   ]
 end
