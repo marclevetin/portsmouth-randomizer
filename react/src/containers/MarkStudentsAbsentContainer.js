@@ -28,11 +28,11 @@ class MarkStudentsAbsentContainer extends Component {
     this.props.everyone.sort();
 
     // assembles the list of checkboxes for the form
-    const allCheckboxes = this.props.everyone.map(student => {
+    const allCheckboxes = this.props.everyone.map((student, index) => {
       const isAbsent = this.props.absent.includes(student)
       return(
         <Checkbox
-          key={Math.random()}
+          key={`absent${index}`}
           form="absent"
           name={student}
           onChange={this.props.handleAbsent}
