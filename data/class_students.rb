@@ -78,4 +78,34 @@ module DATA
     'Tylor P',
     'Molly Z'
   ]
+
+  UNH3 = [
+    'Cody S',
+    'Shauna B',
+    'Ian C',
+    'Bob W',
+    'Rick K',
+    'Mason H',
+    'Scott S',
+    'Greg R',
+    'Jon L',
+    'Declan M',
+    'Izaak M',
+    'Chris N',
+    'JP',
+    'Kyle K',
+    'Peter G',
+    'Cam H',
+    'Viktor D',
+    'Jake P',
+    'Josh LeB',
+    'Lucky F',
+    'Bobby H',
+    'Chris R',
+    'Ryan F',
+    'Andrew H',
+    'Jake L',
+    'John K',
+    'John P'
+  ]
 end
