@@ -18,9 +18,7 @@ class StudentGroupContainer extends Component {
 
   createGroups(array, size) {
     // this opening if is required for initial renders and when the box is empty
-    if (size === 0 || size === '') {
-      return [];
-    } else if (size > array.length) {
+    if (size === 0 || size === '' || size > array.length) {
       return [];
     } else {
 
@@ -47,7 +45,8 @@ class StudentGroupContainer extends Component {
         }
       }
       // the if block above distributes all "remainders", but it leaves an empty array element that needs to be removed.
-      groups.pop();
+      debugger;
+      (array.length % size !== 0 ) ? groups.pop() : '';
 
       return groups;
     }
