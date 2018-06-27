@@ -105,7 +105,6 @@ module DATA
     'Ryan F',
     'Andrew H',
     'Jake L',
-    'John K',
-    'John P'
+    'John K'
   ]
 end
