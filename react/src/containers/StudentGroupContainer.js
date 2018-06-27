@@ -45,7 +45,6 @@ class StudentGroupContainer extends Component {
         }
       }
       // the if block above distributes all "remainders", but it leaves an empty array element that needs to be removed.
-      debugger;
       (array.length % size !== 0 ) ? groups.pop() : '';
 
       return groups;
