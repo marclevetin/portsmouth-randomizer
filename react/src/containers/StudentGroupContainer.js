@@ -54,7 +54,6 @@ class StudentGroupContainer extends Component {
 
 
   render() {
-    debugger;
     // is the component in error?
     const errorStyles = (this.props.error) ? "error" : "";
     const errorMessage = (this.props.error) ? `Please enter a number smaller than ${this.props.everyone.length - this.props.absent.length}` : '';
