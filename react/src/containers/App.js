@@ -132,6 +132,7 @@ class App extends Component {
         />
         <StudentGroupContainer
           everyone={allStudents}
+          absent={this.state.absentStudents}
           groupCount={this.state.groupCount}
           handleChange={this.setGroupCount}
           error={this.state.groupSizeError}

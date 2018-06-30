@@ -54,12 +54,13 @@ class StudentGroupContainer extends Component {
 
 
   render() {
+    debugger;
     // is the component in error?
     const errorStyles = (this.props.error) ? "error" : "";
-    const errorMessage = (this.props.error) ? `Please enter a number smaller than ${this.props.everyone.length}` : '';
+    const errorMessage = (this.props.error) ? `Please enter a number smaller than ${this.props.everyone.length - this.props.absent.length}` : '';
 
     // randomize students
-    const randomizedStudents = this.props.everyone.sort((a, b) => 0.5 - Math.random())
+    const randomizedStudents = this.props.everyone.filter(student => !this.props.absent.includes(student)).sort((a, b) => 0.5 - Math.random())
 
     // build groups
     const allGroups = this.createGroups(randomizedStudents, parseInt(this.props.groupCount))
