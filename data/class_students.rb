@@ -92,7 +92,6 @@ module DATA
     'Declan M',
     'Izaak M',
     'Chris N',
-    'JP',
     'Kyle K',
     'Peter G',
     'Cam H',
