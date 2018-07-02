@@ -20,6 +20,7 @@ class App extends Component {
       pickedStudents: [],
       absentStudents: [],
       groupCount: 0,
+      displayGroupLead: false,
       groupSizeError: false
     }
 
@@ -27,6 +28,7 @@ class App extends Component {
     this.randomStudent = this.randomStudent.bind(this);
     this.handleAbsent = this.handleAbsent.bind(this);
     this.validateGroups = this.validateGroups.bind(this);
+    this.toggleDisplayGroup = this.toggleDisplayGroup.bind(this);
   }
 
   componentDidMount() {
@@ -86,6 +88,13 @@ class App extends Component {
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  toggleDisplayGroup() {
+    const newValue = !this.state.displayGroupLead;
+    this.setState({
+      displayGroupLead: newValue
+    })
+  }
+
   randomStudent() {
     if (this.state.students.length !== 0) {
       // removes absent students from the list.
@@ -134,7 +143,9 @@ class App extends Component {
           everyone={allStudents}
           absent={this.state.absentStudents}
           groupCount={this.state.groupCount}
+          displayGroupLead={this.state.displayGroupLead}
           handleChange={this.setGroupCount}
+          handleLeadChange={this.toggleDisplayGroup}
           error={this.state.groupSizeError}
         />
         <FistToFiveContainer

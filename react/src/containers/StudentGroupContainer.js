@@ -70,6 +70,7 @@ class StudentGroupContainer extends Component {
           key={index}
           index={index + 1}
           lead={group[0]}
+          displayGroupLead={this.props.displayGroupLead}
           participants={group.slice(1)}
         />
       );
@@ -78,8 +79,12 @@ class StudentGroupContainer extends Component {
     return(
       <div>
         <h2>Group creator</h2>
-        <p>Enter number of people per group:</p>
-          <input type="number" className={errorStyles} value={this.props.groupCount} onChange={this.props.handleChange}></input>
+        <p>Enter number of people per group:
+            <input type="number" className={errorStyles} value={this.props.groupCount} onChange={this.props.handleChange}></input>
+        </p>
+        <p>Display Group Lead? <input type="checkbox" value={this.props.displayGroupLead} onChange={this.props.handleLeadChange}></input>
+        </p>
+        
           <br />{errorMessage}
 
         <div className="flex-container">
