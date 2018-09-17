@@ -65,8 +65,7 @@ class App extends Component {
   }
 
   fetchData(classProgram) {
-    let data = classProgram;
-    let url = '/api/v1/students' + classProgram;
+    const url = '/api/v1/students' + classProgram;
 
     fetch(url)
       .then(response => {
